@@ -7,20 +7,20 @@ export class PageManager {
 
     private readonly page:Page
     private readonly navigationLayout:NavigationLayout
-    private readonly board: BoardPage
+    private readonly onBoardPage: BoardPage
 
     constructor(page:Page){
         this.page = page
         this.navigationLayout = new NavigationLayout(this.page)
-        this.board = new BoardPage(this.page)
+        this.onBoardPage = new BoardPage(this.page)
     }
 
     navigateTo(){
         return this.navigationLayout
     }
 
-    chooseColumn(){
-        return this.board
+    onTheBoardPage(){
+        return this.onBoardPage
     }
 
 }

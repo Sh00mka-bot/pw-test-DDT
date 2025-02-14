@@ -1,4 +1,4 @@
-import {Page, Locator} from '@playwright/test'
+import {Page, Locator, expect} from '@playwright/test'
 import { HelperBase } from './helperBase';
 
 export class BoardPage extends HelperBase{
@@ -7,19 +7,42 @@ export class BoardPage extends HelperBase{
         super(page)
     }
 
+    
+    async returnLocatorColumnBy(columnName:string) : Promise<Locator> {
+        const columnList = this.page
+        .locator('.flex.flex-col.w-80.bg-gray-50.rounded-lg.p-4', 
+            {hasText: columnName});
 
-    async verifyTicketNameInColumn(ticket:string, columnName:string) : Promise<Locator> {
-        const columnList = this.page.locator('.inline-flex gap-6 p-6 h-full').
-        locator('.flex flex-col w-80 bg-gray-50 rounded-lg p-4', {hasText:columnName})
-
-        return columnList.locator('.bg-white p-4 rounded-lg', {hasText:ticket})
+        return columnList;
     }
 
-    async verifyTag( ticketLocator:Locator, tagName:string,): Promise<Locator> {
 
-       return ticketLocator.locator('flex flex-wrap gap-2 mb-3', {hasText: tagName})
+    async returnLocatorTicketBy(columnLocator:Locator, ticketName:string): Promise<Locator> {
 
+        const ticketBox = columnLocator.locator('.bg-white.p-4.rounded-lg.shadow-sm.border');
+
+        const matchedTicket = ticketBox.filter({ hasText: ticketName })
+
+        return matchedTicket;
     }
+
+
+    async verifyTag(singleTicketLocator: Locator, tagNameList: Array<string>) {
+ 
+        const tagContainer = singleTicketLocator.locator('.flex.flex-wrap.gap-2.mb-3');
+        const tagElements = await tagContainer.locator('span').all();
+        
+        if (tagElements.length === 0) {
+          throw new Error('No tags found in ticket!');
+        }
+    
+        const tagTexts = await Promise.all(tagElements.map(async (tag) => await tag.textContent()));
+        console.log(`DEBUG: Found tags: ${JSON.stringify(tagTexts)}`);
+    
+
+        expect(tagTexts.sort()).toEqual(tagNameList.sort());
+      }
+
 
 
 

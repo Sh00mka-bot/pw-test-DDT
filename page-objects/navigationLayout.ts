@@ -7,7 +7,12 @@ export class NavigationLayout extends HelperBase {
         super(page)
     }
 
-    async navigateToThe(application: string) {
+    
+    /**
+     * This method naviages to the side bar layout using
+     * @param application 
+     */
+    async sideFormLayout(application: string) {
         const validApplications = ['Web Application', 'Mobile Application'];
     
         if (validApplications.includes(application)) {
@@ -19,8 +24,8 @@ export class NavigationLayout extends HelperBase {
 
 
     private async selectPageByText(navigateTo:string){
-        const navLayout = this.page.locator('nav button h2', {hasText:navigateTo})
-        await navLayout.click()
+        await this.page.locator('nav button h2', {hasText:navigateTo}).click()
+    
     }
 
     
