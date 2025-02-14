@@ -21,9 +21,6 @@ test.describe('Data-Driven Test', async ()=> {
       const locatedColumn = pm.onTheBoardPage().returnLocatorColumnBy(column)
       const locatedTicket = pm.onTheBoardPage().returnLocatorTicketBy(await locatedColumn, ticket)
       await pm.onTheBoardPage().verifyTag(await locatedTicket,tags)
-  })
-    
+    })
   });
 })
-
-
