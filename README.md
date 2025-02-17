@@ -1,3 +1,5 @@
+![Playwright Logo](assets/pw-logo.svg)
+
 ## Overview
 This repository contains a Playwright-driven test suite designed to showcase data-driven testing (DDT) techniques in JavaScript/TypeScript. The suite dynamically adapts test cases from a JSON data structure to ensure scalability and maintainability.
 
